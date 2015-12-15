@@ -10,13 +10,14 @@ main_function
     ;
    
 statements
-    : statement | statements statement
+    : statement*
     ;
 
 statement
     : var_decl_stmt
     | var_assign_stmt
     | print_stmt
+    | condition_stmt
     ;
  
 print_stmt
@@ -36,6 +37,11 @@ var_decl_stmt
     : DECLAREINT IDENTIFIER SETINITIALVALUE expression 
     ;
 
+condition_stmt
+    : IF expression statements ELSE statements ENDIF #ifelseendif
+    | IF expression statements ENDIF                 #ifendid
+    ;
+    
 expression
     : IDENTIFIER #varexpr
     | NUMBER     #numberexpr
@@ -137,6 +143,18 @@ SETVALUE
     
 ENDASSIGNVARIABLE
     : 'ENOUGH TALK'
+    ;
+    
+IF
+    : 'BECAUSE I\'M GOING TO SAY PLEASE'
+    ;
+    
+ELSE
+    : 'BULLSHIT'
+    ;
+    
+ENDIF
+    : 'YOU HAVE NO RESPECT FOR LOGIC'
     ;
     
 IDENTIFIER

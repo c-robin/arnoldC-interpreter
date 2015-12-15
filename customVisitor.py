@@ -56,20 +56,34 @@ class customVisitor(ArnoldCVisitor):
     
     # Visit a parse tree produced by ArnoldCParser#var_decl_stmt.
     def visitVar_decl_stmt(self, ctx):
+        logging.debug("var_decl_stmt")
         var = self.visit(ctx.children[3])
         memory[ctx.children[1].symbol.text] = var
         return self.visitChildren(ctx)
         
 
     # Visit a parse tree produced by ArnoldCParser#var_assign_stmt.
-    def visitVar_assign_stmt(self, ctx):
+    def visitVar_assign_stmt(self, ctx): 
         key = ctx.children[1].symbol.text
         value = self.visit(ctx.children[3])
         func = self.visit(ctx.children[4])
-        memory[key] = func(value)
+        memory[key] = func(value)       
+        logging.debug("var_assign_stmt -> " + str(key) + " = " + str(func(value)))
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ArnoldCParser#ifelseendif.
+    def visitIfelseendif(self, ctx):
+        if self.visit(ctx.children[1]) == 1:
+            return self.visit(ctx.children[2])
+        else:
+            return self.visit(ctx.children[4])
+
+
+    # Visit a parse tree produced by ArnoldCParser#ifendid.
+    def visitIfendid(self, ctx):
+        if self.visit(ctx.children[1]) == 1:
+            return self.visit(ctx.children[2])
 
     ##################################
     # Expressions
