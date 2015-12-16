@@ -74,6 +74,7 @@ class customVisitor(ArnoldCVisitor):
 
     # Visit a parse tree produced by ArnoldCParser#ifelseendif.
     def visitIfelseendif(self, ctx):
+        logging.debug("ifElseEndif")
         if self.visit(ctx.children[1]) == 1:
             return self.visit(ctx.children[2])
         else:
@@ -82,8 +83,15 @@ class customVisitor(ArnoldCVisitor):
 
     # Visit a parse tree produced by ArnoldCParser#ifendid.
     def visitIfendid(self, ctx):
+        logging.debug("ifEndif")
         if self.visit(ctx.children[1]) == 1:
             return self.visit(ctx.children[2])
+            
+    # Visit a parse tree produced by ArnoldCParser#while_stmt.
+    def visitWhile_stmt(self, ctx):   
+        logging.debug("while_stmt")
+        while self.visit(ctx.children[1]) == 1:
+            self.visit(ctx.children[2])
 
     ##################################
     # Expressions

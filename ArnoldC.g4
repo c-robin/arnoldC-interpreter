@@ -18,6 +18,7 @@ statement
     | var_assign_stmt
     | print_stmt
     | condition_stmt
+    | while_stmt
     ;
  
 print_stmt
@@ -40,6 +41,10 @@ var_decl_stmt
 condition_stmt
     : IF expression statements ELSE statements ENDIF #ifelseendif
     | IF expression statements ENDIF                 #ifendid
+    ;
+    
+while_stmt
+    : WHILE expression statements ENDWHILE
     ;
     
 expression
@@ -155,6 +160,14 @@ ELSE
     
 ENDIF
     : 'YOU HAVE NO RESPECT FOR LOGIC'
+    ;
+    
+WHILE
+    : 'STICK AROUND'
+    ;
+    
+ENDWHILE
+    : 'CHILL'
     ;
     
 IDENTIFIER
